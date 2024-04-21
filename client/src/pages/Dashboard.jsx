@@ -106,7 +106,6 @@ const UserTable = ({ users }) => {
         <thead className="border-b border-gray-300 ">
             <tr className="text-black  text-left">
                 <th className="py-2">Full Name</th>
-                <th className="py-2">Status</th>
                 <th className="py-2">Created At</th>
             </tr>
         </thead>
@@ -129,16 +128,6 @@ const UserTable = ({ users }) => {
                 </div>
             </td>
 
-            <td>
-                <p
-                    className={clsx(
-                        "w-fit px-3 py-1 rounded-full text-sm",
-                        user?.isActive ? "bg-blue-200" : "bg-yellow-100"
-                    )}
-                >
-                    {user?.isActive ? "Active" : "Disabled"}
-                </p>
-            </td>
             <td className="py-2 text-sm">
                 {moment(user?.createdAt).fromNow()}
             </td>

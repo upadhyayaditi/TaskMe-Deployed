@@ -97,10 +97,11 @@ const Sidebar = () => {
             </div>
 
             <div className="">
-                <button className="w-full flex gap-2 p-2 items-center text-lg text-gray-800">
-                    <MdSettings />
-                    <span>Settings</span>
-                </button>
+            <p className="text-xs text-gray-500 mt-4">
+                    Copyright © 2024. All Rights Reserved
+                    <br />
+                    Made with 💙 by Aditi
+                </p>
             </div>
         </div>
     )
