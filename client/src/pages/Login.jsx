@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import Textbox from "../components/Textbox"
@@ -11,6 +11,13 @@ import { setCredentials } from "../redux/slices/authSlice"
 import Loading from "../components/Loader"
 
 const Login = () => {
+    const [demoCredentials, setDemoCredentials] = useState({
+        email: "user@gmail.com",
+        password: "123456",
+    })
+
+    const [showDemo, setShowDemo] = useState(true) // State to control the visibility of demo credentials
+
     const { user } = useSelector((state) => state.auth)
     const {
         register,
@@ -21,6 +28,10 @@ const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [login, { isLoading }] = useLoginMutation()
+
+    const handleOkClick = () => {
+        setShowDemo(false) // Hide demo credentials
+    }
 
     const submitHandler = async (data) => {
         try {
@@ -60,7 +71,50 @@ const Login = () => {
                 </div>
 
                 {/* right side */}
-                <div className="w-full md:w-1/3 p-4 md:p-1 flex flex-col justify-center items-center">
+
+                <div className="w-full md:w-1/2 p-4 md:p-1 flex flex-col justify-center items-center">
+                    {showDemo && (
+                        <div
+                            className="bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-900 px-4 py-3 shadow-md mb-3"
+                            role="alert"
+                        >
+                            <div className="flex justify-between items-center">
+                                {" "}
+                                {/* Updated flex class */}
+                                <div className="py-1">
+                                    <svg
+                                        className="fill-current h-6 w-6 text-blue-500 mr-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M2.727 0A2.73 2.73 0 0 0 0 2.727v14.546A2.73 2.73 0 0 0 2.727 20h14.546A2.73 2.73 0 0 0 20 17.273V2.727A2.73 2.73 0 0 0 17.273 0H2.727zM1 2.727a.727.727 0 0 1 .727-.727h16.546a.727.727 0 0 1 .727.727v14.546a.727.727 0 0 1-.727.727H1.727A.727.727 0 0 1 1 17.273V2.727zm11 4h-2V4h2v3zm0 4h-2V8h2v3zm-4-4H6V4h2v3zm0 4H6V8h2v3zm0 4H6v-3h2v3zm-4-4H2V8h1v3zm0 4H2v-3h1v3zm0 4H2v-3h1v3zm9 0h-2v-3h2v3zm0-4h-2v-3h2v3zm0-4h-2V8h2v3z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="font-semibold mb-2">
+                                        Demo admin log-in credentials:
+                                    </p>
+                                    <p>
+                                        Email:{" "}
+                                        <strong>{demoCredentials.email}</strong>
+                                    </p>
+                                    <p>
+                                        Password:{" "}
+                                        <strong>
+                                            {demoCredentials.password}
+                                        </strong>
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={handleOkClick}
+                                    className="mt-2 ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     <form
                         onSubmit={handleSubmit(submitHandler)}
                         className="form-container w-full md:w-[400px] flex flex-col gap-y-8 bg-white px-10 pt-14 pb-14"
@@ -70,7 +124,7 @@ const Login = () => {
                                 Welcome back!
                             </p>
                             <p className="text-center text-base text-gray-700 ">
-                                Keep all your credential safge.
+                                Keep all your credentials safe.
                             </p>
                         </div>
 
